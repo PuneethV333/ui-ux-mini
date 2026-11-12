@@ -40,7 +40,7 @@ trails and a warm gold core.
 
 ## Tech stack
 
-- Expo SDK 54 / React Native 0.81 (TypeScript, Android + iOS)
+- Expo SDK 58 / React Native 0.88 (TypeScript, Android + iOS)
 - Expo Go for instant device previews
 - EAS Build for cloud APK/AAB builds on expo.dev
 - React Navigation 7 — native stack + bottom tabs
@@ -73,9 +73,8 @@ trails and a warm gold core.
 
 ## Open in Expo Go
 
-Install **Expo Go for SDK 54** on your phone (or use the latest Expo Go if it
-still supports SDK 54), make sure the phone and computer are on the same Wi-Fi,
-then run:
+Install **Expo Go for SDK 58** on your phone (the same SDK version as this
+project), make sure the phone and computer are on the same Wi-Fi, then run:
 
 ```bash
 npx expo start --lan
@@ -91,7 +90,7 @@ If the phone cannot reach the computer, use `npx expo start --tunnel`.
 
 ## Build on expo.dev (cloud build)
 
-This repository is a **managed Expo SDK 54 project linked to an Expo account**,
+This repository is a **managed Expo SDK 58 project linked to an Expo account**,
 so EAS Build generates the native project in the cloud. No local Android/Gradle
 build is required.
 

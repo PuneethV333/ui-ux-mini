@@ -37,11 +37,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="transparent"
-        translucent
-      />
+      <StatusBar barStyle="light-content" />
       <AppProvider>
         <PlayerProvider>
           <NavigationContainer theme={navigationTheme}>

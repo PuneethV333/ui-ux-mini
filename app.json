@@ -8,7 +8,6 @@
     "scheme": "sonicverse",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#05030F",
-    "newArchEnabled": true,
     "owner": "punivijay",
     "android": {
       "package": "com.sonicverse",
@@ -16,8 +15,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#05030F"
-      },
-      "edgeToEdgeEnabled": true
+      }
     },
     "extra": {
       "eas": {
@@ -25,12 +23,15 @@
       }
     },
     "plugins": [
-      "expo-font"
-    ],
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#05030F"
-    }
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#05030F",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 620
+        }
+      ]
+    ]
   }
 }

@@ -133,7 +133,8 @@ export default function Onboarding() {
         style={styles.pager}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {x: scrollX}}}],
-          {useNativeDriver: true},
+          // VirtualizedList cannot drive onScroll natively on RN 0.88+.
+          {useNativeDriver: false},
         )}
         scrollEventThrottle={16}
         onMomentumScrollEnd={handleMomentumEnd}

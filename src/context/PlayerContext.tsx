@@ -4,10 +4,15 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
+import {
+  setAudioModeAsync,
+  useAudioPlayer,
+  useAudioPlayerStatus,
+} from 'expo-audio';
 import {universes as seedUniverses} from '../data/mockData';
+import {audioForUniverse} from '../data/audioTracks';
 import type {Universe} from '../data/types';
 
 type PlayerContextValue = {
@@ -30,42 +35,44 @@ const PlayerContext = createContext<PlayerContextValue | null>(null);
 export function PlayerProvider({children}: {children: React.ReactNode}) {
   const [queue, setQueue] = useState<Universe[]>(seedUniverses);
   const [current, setCurrent] = useState<Universe>(seedUniverses[0]);
-  const [isPlaying, setPlaying] = useState(false);
-  const [position, setPosition] = useState(24);
-  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const player = useAudioPlayer(undefined, {updateInterval: 250});
+  const status = useAudioPlayerStatus(player);
 
   useEffect(() => {
-    if (!isPlaying) {
-      return;
-    }
-    tickRef.current = setInterval(() => {
-      setPosition(prev => {
-        if (prev + 1 >= current.duration) {
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, 1000);
-    return () => {
-      if (tickRef.current) {
-        clearInterval(tickRef.current);
-      }
-    };
-  }, [isPlaying, current.duration]);
-
-  const play = useCallback((universe: Universe) => {
-    setCurrent(universe);
-    setPosition(0);
-    setPlaying(true);
-    setQueue(prev => {
-      if (prev.some(item => item.id === universe.id)) {
-        return prev;
-      }
-      return [...prev, universe];
+    setAudioModeAsync({
+      playsInSilentMode: true,
+      interruptionMode: 'doNotMix',
+    }).catch(() => {
+      // Audio focus is best-effort; playback still works without it.
     });
   }, []);
 
-  const pause = useCallback(() => setPlaying(false), []);
+  useEffect(() => {
+    player.loop = true;
+  }, [player]);
+
+  const isPlaying = status.playing;
+  const position = status.currentTime;
+
+  const play = useCallback(
+    (universe: Universe) => {
+      setCurrent(universe);
+      player.replace(audioForUniverse(universe));
+      player.loop = true;
+      player.play();
+      setQueue(prev => {
+        if (prev.some(item => item.id === universe.id)) {
+          return prev;
+        }
+        return [...prev, universe];
+      });
+    },
+    [player],
+  );
+
+  const pause = useCallback(() => {
+    player.pause();
+  }, [player]);
 
   const toggle = useCallback(
     (universe?: Universe) => {
@@ -73,17 +80,29 @@ export function PlayerProvider({children}: {children: React.ReactNode}) {
         play(universe);
         return;
       }
-      setPlaying(prev => !prev);
+      if (status.playing) {
+        player.pause();
+        return;
+      }
+      if (!status.isLoaded) {
+        play(current);
+        return;
+      }
+      if (status.didJustFinish) {
+        player.seekTo(0).catch(() => {});
+      }
+      player.play();
     },
-    [current.id, play],
+    [current, play, player, status.didJustFinish, status.isLoaded, status.playing],
   );
 
   const seek = useCallback(
     (ratio: number) => {
       const clamped = Math.max(0, Math.min(1, ratio));
-      setPosition(Math.round(clamped * current.duration));
+      const duration = status.duration || current.duration;
+      player.seekTo(clamped * duration).catch(() => {});
     },
-    [current.duration],
+    [current.duration, player, status.duration],
   );
 
   const step = useCallback(
@@ -91,11 +110,9 @@ export function PlayerProvider({children}: {children: React.ReactNode}) {
       const index = queue.findIndex(item => item.id === current.id);
       const nextIndex = (index + offset + queue.length) % queue.length;
       const nextUniverse = queue[nextIndex] ?? current;
-      setCurrent(nextUniverse);
-      setPosition(0);
-      setPlaying(true);
+      play(nextUniverse);
     },
-    [current, queue],
+    [current, play, queue],
   );
 
   const next = useCallback(() => step(1), [step]);
@@ -112,7 +129,7 @@ export function PlayerProvider({children}: {children: React.ReactNode}) {
       queue,
       isPlaying,
       position,
-      progress: Math.min(1, position / current.duration),
+      progress: Math.min(1, position / (status.duration || current.duration)),
       play,
       pause,
       toggle,
@@ -126,6 +143,7 @@ export function PlayerProvider({children}: {children: React.ReactNode}) {
       queue,
       isPlaying,
       position,
+      status.duration,
       play,
       pause,
       toggle,

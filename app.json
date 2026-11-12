@@ -31,7 +31,9 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 620
         }
-      ]
+      ],
+      "expo-audio",
+      "expo-asset"
     ]
   }
 }

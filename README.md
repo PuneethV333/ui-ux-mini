@@ -42,6 +42,7 @@ trails and a warm gold core.
 
 - Expo SDK 58 / React Native 0.88 (TypeScript, Android + iOS)
 - Expo Go for instant device previews
+- `expo-audio` for real, seekable local playback
 - EAS Build for cloud APK/AAB builds on expo.dev
 - React Navigation 7 — native stack + bottom tabs
 - React Context for app state and simulated playback
@@ -54,7 +55,7 @@ trails and a warm gold core.
 
 ```
 .
-├── assets/                # app icon, splash art, bundled fonts
+├── assets/                # icons, splash art, fonts and original music
 ├── src/
 │   ├── navigation/        # RootNavigator, MainTabs, route types
 │   ├── screens/           # One folder per screen: index.tsx + styles.ts
@@ -126,10 +127,22 @@ npx react-native bundle --platform android --dev false \
   --entry-file index.js --bundle-output /tmp/sonicverse.bundle
 ```
 
+## Music
+
+The six instrumentals in `assets/audio/` are original tracks synthesized
+locally for this project (no licensing or attribution required). Each universe
+maps to a mood-matched loop, and `expo-audio` provides real playback with
+seeking, duration and looping. The generator is reproducible:
+
+```bash
+python3 tools/generate_music.py
+```
+
 ## Offline guarantee
 
 There is no API client, no `fetch`, no WebSocket and no remote asset loading.
-Artwork is generated with SVG at runtime; fonts and the app icon are bundled.
+Artwork and music are generated locally; fonts, audio and the app icon are
+bundled into the app.
 
 ## Assignment notes
 

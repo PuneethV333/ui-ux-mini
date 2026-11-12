@@ -16,7 +16,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import Svg, {G, Path, Rect} from 'react-native-svg';
 import CosmicHeader from '../../components/layout/CosmicHeader';
 import ScreenContainer from '../../components/layout/ScreenContainer';

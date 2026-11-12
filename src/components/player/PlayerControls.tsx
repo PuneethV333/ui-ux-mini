@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Slider from '@react-native-community/slider';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import {colors, fonts, gradients, spacing} from '../../theme';
 import {usePlayer} from '../../context/PlayerContext';
 import {formatDuration} from '../../utils/format';
@@ -57,7 +57,7 @@ export default function PlayerControls({
         />
         <View style={styles.playWrap}>
           <LinearGradient
-            colors={[...accent]}
+            colors={[...accent] as [string, string, ...string[]]}
             start={{x: 0, y: 0}}
             end={{x: 1, y: 1}}
             style={styles.playGlow}

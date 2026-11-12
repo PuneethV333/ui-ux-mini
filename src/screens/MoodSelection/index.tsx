@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {Animated, Pressable, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import CosmicHeader from '../../components/layout/CosmicHeader';
 import ScreenContainer from '../../components/layout/ScreenContainer';
 import GlassCard from '../../components/common/GlassCard';

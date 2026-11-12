@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import type {RootScreenProps} from '../../navigation/types';
 import {useApp} from '../../context/AppContext';
 import {

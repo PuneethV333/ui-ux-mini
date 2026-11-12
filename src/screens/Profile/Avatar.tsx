@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import Svg, {Ellipse} from 'react-native-svg';
 import {colors, gradients} from '../../theme';
 import {styles} from './styles';

@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import type {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import {useNavigation} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ScreenContainer from '../../components/layout/ScreenContainer';

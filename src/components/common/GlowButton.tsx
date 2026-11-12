@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import {colors, fonts, gradients, radius, shadows, sizes, spacing} from '../../theme';
 import Icon, {IconName} from './Icon';
 

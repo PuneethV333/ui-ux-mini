@@ -23,6 +23,14 @@
       "eas": {
         "projectId": "9d865923-52f8-4710-9a0b-6789ffcf5439"
       }
+    },
+    "plugins": [
+      "expo-font"
+    ],
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#05030F"
     }
   }
 }

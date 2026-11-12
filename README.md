@@ -40,20 +40,21 @@ trails and a warm gold core.
 
 ## Tech stack
 
-- React Native 0.81 (TypeScript, Android)
-- Expo config + EAS Build (cloud APK/AAB builds on expo.dev)
+- Expo SDK 54 / React Native 0.81 (TypeScript, Android + iOS)
+- Expo Go for instant device previews
+- EAS Build for cloud APK/AAB builds on expo.dev
 - React Navigation 7 — native stack + bottom tabs
 - React Context for app state and simulated playback
 - `react-native-svg` for all artwork, icons, orbits and the drawing canvas
-- `react-native-linear-gradient` for brand gradients
+- `expo-linear-gradient` for brand gradients
 - `@react-native-community/slider` for seek and intensity
-- Orbitron + Space Grotesk bundled locally (no runtime font download)
+- Orbitron + Space Grotesk loaded with `expo-font` (bundled offline)
 
 ## Project structure
 
 ```
 .
-├── android/
+├── assets/                # app icon, splash art, bundled fonts
 ├── src/
 │   ├── navigation/        # RootNavigator, MainTabs, route types
 │   ├── screens/           # One folder per screen: index.tsx + styles.ts
@@ -70,11 +71,29 @@ trails and a warm gold core.
 └── index.js
 ```
 
+## Open in Expo Go
+
+Install **Expo Go for SDK 54** on your phone (or use the latest Expo Go if it
+still supports SDK 54), make sure the phone and computer are on the same Wi-Fi,
+then run:
+
+```bash
+npx expo start --lan
+```
+
+Scan the QR code or enter the printed `exp://…:8081` URL manually in Expo Go.
+If the phone cannot reach the computer, use `npx expo start --tunnel`.
+
+> Expo Go only contains a fixed set of native modules. This app intentionally
+> uses only modules bundled with Expo Go: `expo-linear-gradient`, `expo-font`,
+> `react-native-svg`, `react-native-screens`, `react-native-safe-area-context`
+> and `@react-native-community/slider`.
+
 ## Build on expo.dev (cloud build)
 
-This repository is a **bare React Native project linked to an Expo account**, so
-it is built in the cloud with EAS Build. No local Android/Gradle build is
-required.
+This repository is a **managed Expo SDK 54 project linked to an Expo account**,
+so EAS Build generates the native project in the cloud. No local Android/Gradle
+build is required.
 
 Expo project details (already set in `app.json`):
 

@@ -8,7 +8,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import type {RootScreenProps} from '../../navigation/types';
 import type {Universe} from '../../data/types';
 import {useApp} from '../../context/AppContext';

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Animated, Pressable, Text, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import GlassCard from '../../components/common/GlassCard';
 import Icon from '../../components/common/Icon';
 import type {IconName} from '../../components/common/Icon';
@@ -66,7 +66,7 @@ export default function IngredientCard({
           <View style={styles.cardTop}>
             <View style={styles.orb}>
               <LinearGradient
-                colors={[...accent.gradient]}
+                colors={[...accent.gradient] as [string, string, ...string[]]}
                 start={{x: 0, y: 0}}
                 end={{x: 1, y: 1}}
                 style={styles.orbFill}

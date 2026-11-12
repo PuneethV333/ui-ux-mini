@@ -8,7 +8,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import Svg, {
   Circle,
   Defs,
@@ -364,7 +364,7 @@ export default function SonicverseMap({navigation}: RootScreenProps<'SonicverseM
                         isSelected && styles.nodeOrbRingSelected,
                       ]}>
                       <LinearGradient
-                        colors={[...orbColors]}
+                        colors={[...orbColors] as [string, string, ...string[]]}
                         start={{x: 0, y: 0}}
                         end={{x: 1, y: 1}}
                         style={styles.nodeOrbCore}

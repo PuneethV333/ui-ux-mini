@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import Icon from '../../components/common/Icon';
 import IconButton from '../../components/common/IconButton';
 import SectionHeader from '../../components/common/SectionHeader';

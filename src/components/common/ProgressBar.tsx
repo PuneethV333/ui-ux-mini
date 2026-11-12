@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 import {colors, gradients, radius} from '../../theme';
 
 type Props = {
@@ -30,7 +30,7 @@ export default function ProgressBar({
       ]}>
       <View style={[styles.fill, {width: `${value * 100}%`}]}>
         <LinearGradient
-          colors={[...gradient]}
+          colors={[...gradient] as [string, string, ...string[]]}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
           style={[StyleSheet.absoluteFill, {borderRadius: height / 2}]}

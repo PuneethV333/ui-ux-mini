@@ -1,9 +1,5 @@
-/**
- * @format
- */
-
-import { AppRegistry } from 'react-native';
+import {registerRootComponent} from 'expo';
 import App from './App';
 
-// Keep this in sync with app.json -> expo.android.package / app display name.
-AppRegistry.registerComponent('Sonicverse', () => App);
+// Expo Go and EAS builds both use the "main" root registered here.
+registerRootComponent(App);

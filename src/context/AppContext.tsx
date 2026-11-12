@@ -39,6 +39,7 @@ type AppContextValue = {
     style?: string;
     gradient?: GradientName;
     mode?: 'parallel' | 'remix';
+    displayMood?: string;
   }) => Universe;
   toggleFavorite: (id: string) => void;
   selectUniverse: (id: string) => void;
@@ -115,6 +116,7 @@ export function AppProvider({children}: {children: React.ReactNode}) {
       style?: string;
       gradient?: GradientName;
       mode?: 'parallel' | 'remix';
+      displayMood?: string;
     }) => {
       const seed = seedUniverses;
       const index = universes.length + 1;
@@ -129,6 +131,7 @@ export function AppProvider({children}: {children: React.ReactNode}) {
         name,
         mood: draft.mood,
         style: options?.style ?? draft.style,
+        displayMood: options?.displayMood,
         gradient: options?.gradient ?? seed[index % seed.length].gradient,
         duration: 134,
         createdAt: 'Just now',

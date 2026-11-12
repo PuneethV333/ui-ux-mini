@@ -31,6 +31,7 @@ export type Universe = {
   name: string;
   mood: MoodId;
   style: string;
+  displayMood?: string;
   duration: number;
   createdAt: string;
   description: string;

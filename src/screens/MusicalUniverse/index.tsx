@@ -185,7 +185,8 @@ export default function MusicalUniverse({navigation, route}: Props) {
             {universe.name}
           </Text>
           <Text style={styles.universeMeta}>
-            {mood.label} <Text style={styles.metaDot}>•</Text> {universe.style}
+            {universe.displayMood ?? mood.label}{' '}
+            <Text style={styles.metaDot}>•</Text> {universe.style}
           </Text>
           <Text numberOfLines={2} style={styles.description}>
             {universe.description}

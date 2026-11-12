@@ -353,7 +353,54 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     backgroundColor: colors.scrim,
   },
+  devicePanel: {
+    marginTop: spacing.lg,
+    paddingTop: spacing.lg,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+  deviceHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: spacing.sm,
+  },
+  deviceTitle: {
+    fontFamily: fonts.bodyBold,
+    fontSize: 9.5,
+    letterSpacing: 1.8,
+    color: colors.textDim,
+  },
+  deviceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 5,
+    gap: spacing.md,
+  },
+  deviceLabel: {
+    fontFamily: fonts.body,
+    fontSize: 11.5,
+    color: colors.textDim,
+  },
+  deviceValue: {
+    flexShrink: 1,
+    textAlign: 'right',
+    fontFamily: fonts.bodyMedium,
+    fontSize: 11.5,
+    color: colors.text,
+  },
+  deviceValueAccent: {color: colors.secondary},
+  devicePrivacy: {
+    marginTop: spacing.sm,
+    fontFamily: fonts.body,
+    fontSize: 10,
+    lineHeight: 14,
+    color: colors.textDim,
+  },
+
   sheet: {
+    maxHeight: '92%',
     borderTopLeftRadius: radius.xxl,
     borderTopRightRadius: radius.xxl,
     borderTopWidth: 1,
@@ -406,6 +453,7 @@ export const styles = StyleSheet.create({
     lineHeight: lineHeight.xs,
     color: colors.textMuted,
   },
+  sheetScroll: {flexShrink: 1},
   sheetContent: {paddingHorizontal: spacing.xxl},
   sheetFooterNote: {
     marginTop: spacing.lg,

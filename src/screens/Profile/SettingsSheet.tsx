@@ -1,7 +1,19 @@
 import React, {useEffect, useRef} from 'react';
-import {Animated, Modal, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Animated,
+  Modal,
+  PixelRatio,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Constants from 'expo-constants';
+import * as Device from 'expo-device';
 import GlowButton from '../../components/common/GlowButton';
 import Icon, {IconName} from '../../components/common/Icon';
 import IconButton from '../../components/common/IconButton';
@@ -107,7 +119,36 @@ export default function SettingsSheet({
   onClose,
 }: Props) {
   const insets = useSafeAreaInsets();
+  const {width, height} = useWindowDimensions();
   const translateY = useRef(new Animated.Value(380)).current;
+
+  const runtime =
+    Constants.executionEnvironment === 'storeClient'
+      ? 'Expo Go'
+      : 'Native build';
+  const deviceName =
+    [Device.manufacturer, Device.modelName].filter(Boolean).join(' ') ||
+    'Unknown device';
+  const diagnostics = [
+    {label: 'Device', value: deviceName, accent: true},
+    {label: 'System', value: `${Device.osName ?? 'Android'} ${Device.osVersion ?? ''}`.trim()},
+    {
+      label: 'Environment',
+      value: Device.isDevice ? 'Physical device' : 'Emulator',
+      accent: !Device.isDevice,
+    },
+    {
+      label: 'Screen',
+      value: `${Math.round(width)} × ${Math.round(height)} dp · ${PixelRatio.get()}x`,
+    },
+    {
+      label: 'App',
+      value: `${Constants.expoConfig?.version ?? '1.0.0'} · SDK ${
+        Constants.expoConfig?.sdkVersion ?? '58'
+      }`,
+    },
+    {label: 'Runtime', value: runtime},
+  ];
 
   useEffect(() => {
     if (!visible) {
@@ -175,7 +216,11 @@ export default function SettingsSheet({
             />
           </View>
 
-          <View style={styles.sheetContent}>
+          <ScrollView
+            style={styles.sheetScroll}
+            contentContainerStyle={styles.sheetContent}
+            showsVerticalScrollIndicator={false}
+            bounces={false}>
             {ROWS.map((row, index) => (
               <View
                 key={row.key}
@@ -201,6 +246,29 @@ export default function SettingsSheet({
                 />
               </View>
             ))}
+            <View style={styles.devicePanel}>
+              <View style={styles.deviceHeader}>
+                <Icon name="disc" size={12} color={colors.secondary} />
+                <Text style={styles.deviceTitle}>DEVICE DIAGNOSTICS</Text>
+              </View>
+              {diagnostics.map(item => (
+                <View key={item.label} style={styles.deviceRow}>
+                  <Text style={styles.deviceLabel}>{item.label}</Text>
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.deviceValue,
+                      item.accent && styles.deviceValueAccent,
+                    ]}>
+                    {item.value}
+                  </Text>
+                </View>
+              ))}
+              <Text style={styles.devicePrivacy}>
+                Collected on-device only. No identifiers, accounts or usage data
+                leave this app.
+              </Text>
+            </View>
             <Text style={styles.sheetFooterNote}>
               Preferences stay on this device for the demo session.
             </Text>
@@ -211,7 +279,7 @@ export default function SettingsSheet({
               onPress={onClose}
               style={styles.sheetDone}
             />
-          </View>
+          </ScrollView>
         </Animated.View>
       </View>
     </Modal>

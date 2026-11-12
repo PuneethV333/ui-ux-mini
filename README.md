@@ -43,6 +43,7 @@ trails and a warm gold core.
 - Expo SDK 58 / React Native 0.88 (TypeScript, Android + iOS)
 - Expo Go for instant device previews
 - `expo-audio` for real, seekable local playback
+- `expo-device` + `expo-constants` for local device diagnostics
 - EAS Build for cloud APK/AAB builds on expo.dev
 - React Navigation 7 — native stack + bottom tabs
 - React Context for app state and simulated playback
@@ -137,6 +138,14 @@ seeking, duration and looping. The generator is reproducible:
 ```bash
 python3 tools/generate_music.py
 ```
+
+## Device diagnostics
+
+Profile → Settings includes a **Device diagnostics** panel showing the device
+model, OS version, emulator/physical status, screen size, app version and
+runtime (Expo Go or native build). It uses `expo-device` and `expo-constants`
+and requires no permissions. Everything is displayed locally; no identifiers or
+usage data are collected or transmitted.
 
 ## Offline guarantee
 

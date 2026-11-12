@@ -25,7 +25,6 @@ type Props = {
   coreLabel?: string;
   activeNodeId?: string;
   onNodePress?: (node: OrbitNode) => void;
-  variant?: 'default' | 'result' | 'final';
   showLabels?: boolean;
 };
 
@@ -34,7 +33,6 @@ export default function OrbitVisual({
   nodes = [],
   coreLabel = 'Core',
   activeNodeId,
-  variant = 'default',
   showLabels = true,
 }: Props) {
   const center = size / 2;

@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {colors, fonts, fontSize, letterSpacing, radius, spacing} from '../../theme';
-import Icon from '../common/Icon';
+import {colors, fonts, fontSize, letterSpacing, spacing} from '../../theme';
 import IconButton from '../common/IconButton';
 
 type Props = {

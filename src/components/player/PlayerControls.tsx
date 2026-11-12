@@ -2,10 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Slider from '@react-native-community/slider';
 import LinearGradient from 'react-native-linear-gradient';
-import {colors, fonts, gradients, radius, spacing} from '../../theme';
+import {colors, fonts, gradients, spacing} from '../../theme';
 import {usePlayer} from '../../context/PlayerContext';
 import {formatDuration} from '../../utils/format';
-import Icon from '../common/Icon';
 import IconButton from '../common/IconButton';
 import ProgressBar from '../common/ProgressBar';
 

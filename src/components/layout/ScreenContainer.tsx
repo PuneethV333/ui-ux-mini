@@ -33,7 +33,7 @@ export default function ScreenContainer({
   variant = 'default',
   showNebula = true,
 }: Props) {
-  const paddingBottom = withTabBar ? 118 : spacing.xxxl;
+  const paddingBottom = withTabBar ? spacing.xxl : spacing.xxxl;
   return (
     <GradientBackground variant={variant} showNebula={showNebula}>
       <SafeAreaView style={[styles.safe, style]} edges={edges}>

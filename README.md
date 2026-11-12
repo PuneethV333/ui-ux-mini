@@ -1,97 +1,105 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Sonicverse
 
-# Getting Started
+**Draw your mood. Create your sound. Explore the universe.**
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Sonicverse is an offline-first React Native (TypeScript) concept app built for a
+UI/UX college assignment. Every piece of content lives in local mock data and
+React Context — there is **no backend, no authentication server and no network
+calls anywhere in the app**.
 
-## Step 1: Start Metro
+The experience follows a complete creative loop: express a mood, sketch it,
+watch it become a musical universe, branch into parallel universes, compare and
+remix them, then save the result to your library.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Screens
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+| # | Flow | Screen | Purpose |
+|---|------|--------|---------|
+| 01 | Entry | Splash | Brand hero and entry point |
+| 02 | Entry | Onboarding | Three-slide introduction |
+| 03 | Entry | Login | Local demo sign-in |
+| 03b | Entry | Signup | Local demo account creation |
+| 04 | Home | Home | Greeting, create CTA, universes, discover |
+| 05 | Create | MoodSelection | Choose one of eight moods |
+| 06 | Create | DrawYourMood | Finger-draw a mood with brush tools |
+| 07 | Create | GeneratingUniverse | Animated generation checklist |
+| 08 | Create | MusicalUniverse | Playback and orbit of the new universe |
+| 09 | Parallel | CreateParallelUniverse | Pick a new mood and style |
+| 10 | Parallel | ParallelUniverseResult | Preview, compare, remix, save |
+| 11 | Parallel | SonicverseMap | Explore the universe family tree |
+| 12 | Parallel | CompareUniverses | Compare original vs parallel metrics |
+| 13 | Remix | RemixMerge | Mix elements from both universes |
+| 14 | Remix | FinalComposition | Final player, save and share actions |
+| 15 | Library | Library | Search, filter and play saved universes |
+| 16 | Profile | Profile | Stats, menu and settings |
 
-```sh
-# Using npm
-npm start
+The Figma source is the `Sonicverse | B2 | QuadPixels` file. The wireframes
+define the information architecture; the visual system is derived from the
+Sonicverse logo: deep-space violet, magenta/violet nebulae, electric blue orbit
+trails and a warm gold core.
 
-# OR using Yarn
-yarn start
+## Tech stack
+
+- React Native 0.81 (TypeScript, Android)
+- React Navigation 7 — native stack + bottom tabs
+- React Context for app state and simulated playback
+- `react-native-svg` for all artwork, icons, orbits and the drawing canvas
+- `react-native-linear-gradient` for brand gradients
+- `@react-native-community/slider` for seek and intensity
+- Orbitron + Space Grotesk bundled locally (no runtime font download)
+
+## Project structure
+
+```
+.
+├── android/
+├── src/
+│   ├── navigation/        # RootNavigator, MainTabs, route types
+│   ├── screens/           # One folder per screen: index.tsx + styles.ts
+│   ├── components/
+│   │   ├── common/        # buttons, cards, icon set, inputs, artwork
+│   │   ├── player/        # orbit visual, transport, mini player
+│   │   └── layout/        # cosmic canvas, headers, custom tab bar
+│   ├── theme/             # colors, typography, spacing, tokens
+│   ├── context/           # AppContext + PlayerContext
+│   ├── data/              # mockData.ts (all content, offline)
+│   ├── hooks/
+│   └── utils/
+├── App.tsx
+└── index.js
 ```
 
-## Step 2: Build and run your app
+## Run locally
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npm install
+npm start                 # Metro
+npm run android           # debug build onto a running emulator/device
 ```
 
-### iOS
+The Android toolchain needs JDK 17 and Android SDK 36:
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+cd android && ./gradlew assembleDebug
 ```
 
-Then, and every time you update your native dependencies, run:
+APK output:
 
-```sh
-bundle exec pod install
+```
+android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## Offline guarantee
 
-```sh
-# Using npm
-npm run ios
+There is no API client, no `fetch`, no WebSocket and no remote asset loading.
+Artwork is generated with SVG at runtime; fonts and the app icon are bundled.
 
-# OR using Yarn
-yarn ios
-```
+## Assignment notes
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Design tokens are centralised in `src/theme/`; screens consume tokens rather
+  than hard-coded brand values.
+- Navigation supports the full flow from auth to library, including back
+  navigation and tab switching.
+- Playback is simulated locally (timers + progress state), which is enough to
+  demonstrate player UX without audio files or a backend.

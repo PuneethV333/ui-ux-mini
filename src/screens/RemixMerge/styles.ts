@@ -1,6 +1,200 @@
 import {StyleSheet} from 'react-native';
+import {
+  colors,
+  fonts,
+  fontSize,
+  letterSpacing,
+  lineHeight,
+  radius,
+  spacing,
+} from '../../theme';
 
 export const styles = StyleSheet.create({
-  center: {flex: 1, alignItems: 'center', justifyContent: 'center'},
-  placeholder: {color: '#B7AAD8', fontSize: 15},
+  hero: {marginBottom: spacing.xl},
+  eyebrow: {
+    fontFamily: fonts.bodyBold,
+    fontSize: 10,
+    letterSpacing: letterSpacing.widest,
+    color: colors.secondary,
+    marginBottom: spacing.sm,
+  },
+  headline: {
+    fontFamily: fonts.displayBold,
+    fontSize: fontSize.h2,
+    lineHeight: lineHeight.h2,
+    letterSpacing: letterSpacing.tight,
+    color: colors.text,
+  },
+  helper: {
+    marginTop: spacing.md,
+    fontFamily: fonts.body,
+    fontSize: fontSize.body,
+    lineHeight: lineHeight.body,
+    color: colors.textMuted,
+  },
+
+  // Mix summary
+  summary: {marginBottom: spacing.xl},
+  summaryInner: {padding: spacing.lg},
+  summaryHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.md,
+  },
+  summaryTitleWrap: {flex: 1},
+  summaryEyebrow: {
+    fontFamily: fonts.bodyBold,
+    fontSize: 9,
+    letterSpacing: letterSpacing.widest,
+    color: colors.textDim,
+  },
+  summaryTitle: {
+    marginTop: 4,
+    fontFamily: fonts.bodyBold,
+    fontSize: fontSize.caption,
+    lineHeight: lineHeight.caption,
+    color: colors.text,
+  },
+  summaryIcon: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.surfaceGlass,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  summaryNote: {
+    marginTop: spacing.sm,
+    fontFamily: fonts.body,
+    fontSize: fontSize.xs,
+    lineHeight: lineHeight.xs,
+    color: colors.textDim,
+  },
+  summaryNoteActive: {
+    color: colors.secondary,
+    fontFamily: fonts.bodyMedium,
+  },
+
+  // Waveform
+  waveRow: {
+    height: 42,
+    marginTop: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  waveBarActive: {opacity: 1},
+  waveBarIdle: {opacity: 0.45},
+  waveBar: {
+    flex: 1,
+    minWidth: 2,
+    maxWidth: 5,
+    marginHorizontal: 1.5,
+    borderRadius: radius.xs,
+  },
+
+  // Ingredient grid
+  grid: {marginBottom: spacing.sm},
+  gridRow: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    gap: spacing.md,
+    marginBottom: spacing.md,
+  },
+  cardWrap: {flex: 1},
+  card: {flex: 1, minHeight: 184},
+  cardInner: {flex: 1, padding: spacing.md},
+  cardTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    marginBottom: spacing.sm,
+  },
+  orb: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  orbFill: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.65,
+  },
+  orbInner: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.overlay,
+  },
+  cardLabel: {
+    flex: 1,
+    fontFamily: fonts.bodyBold,
+    fontSize: fontSize.caption,
+    color: colors.text,
+    letterSpacing: 0.2,
+  },
+  options: {
+    marginTop: 'auto',
+    gap: spacing.xs,
+  },
+  option: {
+    height: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.sm,
+    borderRadius: radius.sm,
+    borderWidth: 1,
+    borderColor: colors.transparent,
+    overflow: 'hidden',
+  },
+  optionSelected: {
+    borderColor: colors.borderStrong,
+  },
+  optionFill: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: radius.sm,
+  },
+  radio: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    borderWidth: 1.5,
+    borderColor: colors.textDim,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  radioSelected: {borderWidth: 2},
+  radioDot: {width: 8, height: 8, borderRadius: 4},
+  optionLabel: {
+    flex: 1,
+    marginLeft: spacing.sm,
+    fontFamily: fonts.bodyMedium,
+    fontSize: fontSize.sm,
+    color: colors.textMuted,
+  },
+  optionLabelSelected: {
+    fontFamily: fonts.bodyBold,
+    color: colors.text,
+  },
+
+  // Bottom actions
+  actions: {
+    marginTop: spacing.lg,
+    gap: spacing.md,
+  },
 });

@@ -41,6 +41,7 @@ trails and a warm gold core.
 ## Tech stack
 
 - React Native 0.81 (TypeScript, Android)
+- Expo config + EAS Build (cloud APK/AAB builds on expo.dev)
 - React Navigation 7 — native stack + bottom tabs
 - React Context for app state and simulated playback
 - `react-native-svg` for all artwork, icons, orbits and the drawing canvas
@@ -69,25 +70,42 @@ trails and a warm gold core.
 └── index.js
 ```
 
-## Run locally
+## Build on expo.dev (cloud build)
+
+This repository is a **bare React Native project linked to an Expo account**, so
+it is built in the cloud with EAS Build. No local Android/Gradle build is
+required.
+
+Expo project details (already set in `app.json`):
+
+- Owner: `punivijay`
+- Slug: `sonic-verse`
+- Project ID: `9d865923-52f8-4710-9a0b-6789ffcf5439`
+- Android package: `com.sonicverse`
+
+Build profiles in `eas.json`:
+
+- `preview` — installable **APK** (recommended for the assignment demo)
+- `production` — **AAB** for store distribution
+- `development` — internal APK for development testing
+
+On [expo.dev](https://expo.dev), open the `sonic-verse` project, choose
+**Builds → Build from GitHub**, select this repository/branch, and run the
+`preview` profile. When the build finishes, download the APK from the build page
+and install it on the emulator or phone.
+
+Optional CLI equivalent (run by the person with the Expo account):
 
 ```bash
-npm install
-npm start                 # Metro
-npm run android           # debug build onto a running emulator/device
+npx eas-cli@latest login
+npx eas-cli@latest build --platform android --profile preview
 ```
 
-The Android toolchain needs JDK 17 and Android SDK 36:
+If the JS bundle needs to be inspected locally without a native build:
 
 ```bash
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-cd android && ./gradlew assembleDebug
-```
-
-APK output:
-
-```
-android/app/build/outputs/apk/debug/app-debug.apk
+npx react-native bundle --platform android --dev false \
+  --entry-file index.js --bundle-output /tmp/sonicverse.bundle
 ```
 
 ## Offline guarantee

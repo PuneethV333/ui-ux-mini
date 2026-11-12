@@ -63,6 +63,27 @@ yarn-error.log
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
 
+# Expo / EAS — builds happen on expo.dev, never in the repo
+.expo/
+.eas/
+dist/
+web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Local Android build outputs (debug/release APK, AAB, native object files)
+android/app/build/
+android/build/
+android/.gradle/
+.gradle/
+*.apk
+*.aab
+*.hprof
+
 # testing
 /coverage
 

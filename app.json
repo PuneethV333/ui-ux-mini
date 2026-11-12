@@ -1,4 +1,28 @@
 {
-  "name": "Sonicverse",
-  "displayName": "Sonicverse"
+  "expo": {
+    "name": "Sonicverse",
+    "slug": "sonic-verse",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "sonicverse",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#05030F",
+    "newArchEnabled": true,
+    "owner": "punivijay",
+    "android": {
+      "package": "com.sonicverse",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#05030F"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9d865923-52f8-4710-9a0b-6789ffcf5439"
+      }
+    }
+  }
 }

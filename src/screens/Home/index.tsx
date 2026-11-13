@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import {
   Pressable,
   ScrollView,
@@ -9,7 +9,6 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {LinearGradient} from 'expo-linear-gradient';
 import Icon from '../../components/common/Icon';
-import IconButton from '../../components/common/IconButton';
 import SectionHeader from '../../components/common/SectionHeader';
 import ScreenContainer from '../../components/layout/ScreenContainer';
 import {useApp} from '../../context/AppContext';
@@ -65,7 +64,6 @@ export default function Home() {
   const {user, universes, selectUniverse} = useApp();
   const {play, toggle, isCurrent, isPlaying} = usePlayer();
   useExitPrompt();
-  const [hasUnread, setHasUnread] = useState(true);
 
   const greeting = useMemo(() => greetingForHour(new Date().getHours()), []);
   const initials = useMemo(() => initialsOf(user.name), [user.name]);
@@ -107,25 +105,6 @@ export default function Home() {
           </View>
 
           <View style={styles.headerActions}>
-            <View>
-              <IconButton
-                name="settings"
-                size={40}
-                iconSize={18}
-                onPress={() => setHasUnread(false)}
-                accessibilityLabel={
-                  hasUnread
-                    ? 'Notifications, 3 unread'
-                    : 'Notifications, all read'
-                }
-              />
-              {hasUnread ? (
-                <View style={styles.badge} pointerEvents="none">
-                  <Text style={styles.badgeText}>3</Text>
-                </View>
-              ) : null}
-            </View>
-
             <Pressable
               accessibilityRole="button"
               accessibilityLabel={`Open ${user.name}'s profile`}

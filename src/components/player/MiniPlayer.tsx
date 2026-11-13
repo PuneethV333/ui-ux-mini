@@ -11,11 +11,26 @@ import {formatDuration} from '../../utils/format';
 /** Persistent now-playing bar shown above the bottom tab bar. */
 export default function MiniPlayer() {
   const navigation = useNavigation<any>();
-  const {current, isPlaying, position, toggle, next} = usePlayer();
+  const {current, isPlaying, position, pause, toggle, queue} = usePlayer();
+  const currentIndex = queue.findIndex(item => item.id === current.id);
+  const nextUniverse =
+    queue[(currentIndex + 1 + queue.length) % queue.length] ?? current;
+
+  const openPlayer = () =>
+    navigation.navigate('MusicalUniverse', {universeId: current.id});
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      pause();
+    } else {
+      toggle();
+      openPlayer();
+    }
+  };
 
   return (
     <Pressable
-      onPress={() => navigation.navigate('MusicalUniverse', {universeId: current.id})}
+      onPress={openPlayer}
       style={({pressed}) => [styles.root, pressed && styles.pressed]}>
       <LinearGradient
         colors={['rgba(38,22,74,0.98)', 'rgba(14,8,30,0.98)']}
@@ -53,7 +68,7 @@ export default function MiniPlayer() {
         </View>
         <Pressable
           hitSlop={10}
-          onPress={() => toggle()}
+          onPress={handlePlayPause}
           style={styles.play}
           accessibilityLabel={isPlaying ? 'Pause' : 'Play'}>
           <Icon
@@ -64,7 +79,11 @@ export default function MiniPlayer() {
         </Pressable>
         <Pressable
           hitSlop={10}
-          onPress={next}
+          onPress={() =>
+            navigation.navigate('MusicalUniverse', {
+              universeId: nextUniverse.id,
+            })
+          }
           style={styles.skip}
           accessibilityLabel="Next track">
           <Icon name="skip-forward" size={16} color={colors.textMuted} />

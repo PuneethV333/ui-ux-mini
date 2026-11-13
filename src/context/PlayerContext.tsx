@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import {AppState} from 'react-native';
 import {
   setAudioModeAsync,
   useAudioPlayer,
@@ -49,6 +50,15 @@ export function PlayerProvider({children}: {children: React.ReactNode}) {
 
   useEffect(() => {
     player.loop = true;
+  }, [player]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', state => {
+      if (state !== 'active') {
+        player.pause();
+      }
+    });
+    return () => subscription.remove();
   }, [player]);
 
   const isPlaying = status.playing;

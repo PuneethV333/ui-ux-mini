@@ -133,7 +133,10 @@ npx react-native bundle --platform android --dev false \
 The six instrumentals in `assets/audio/` are original tracks synthesized
 locally for this project (no licensing or attribution required). Each universe
 maps to a mood-matched loop, and `expo-audio` provides real playback with
-seeking, duration and looping. The generator is reproducible:
+seeking, duration and looping. Playback pauses automatically when leaving the
+player screens, when entering the drawing canvas, when switching tabs, and when
+the app goes to the background. Play buttons route to the player so the
+transport controls are always available. The generator is reproducible:
 
 ```bash
 python3 tools/generate_music.py

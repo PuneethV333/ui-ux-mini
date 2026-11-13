@@ -11,7 +11,6 @@ import {
 import {LinearGradient} from 'expo-linear-gradient';
 import type {RootScreenProps} from '../../navigation/types';
 import {useApp} from '../../context/AppContext';
-import {usePlayer} from '../../context/PlayerContext';
 import {getMood, getUniverse} from '../../data/mockData';
 import {formatDuration} from '../../utils/format';
 import ScreenContainer from '../../components/layout/ScreenContainer';
@@ -33,8 +32,12 @@ export default function ParallelUniverseResult({
   navigation,
   route,
 }: RootScreenProps<'ParallelUniverseResult'>) {
-  const {universes, upsertUniverse, toggleFavorite} = useApp();
-  const {play} = usePlayer();
+  const {
+    universes,
+    upsertUniverse,
+    toggleFavorite,
+    selectUniverse,
+  } = useApp();
   const {width} = useWindowDimensions();
   const orbitSize = Math.min(width - spacing.screen * 2, 338);
 
@@ -155,7 +158,12 @@ export default function ParallelUniverseResult({
             variant="secondary"
             icon="play"
             fullWidth={false}
-            onPress={() => play(universe)}
+            onPress={() => {
+              selectUniverse(universe.id);
+              navigation.navigate('MusicalUniverse', {
+                universeId: universe.id,
+              });
+            }}
             style={styles.playButton}
           />
         </View>

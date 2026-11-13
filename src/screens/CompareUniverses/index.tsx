@@ -12,7 +12,6 @@ import {LinearGradient} from 'expo-linear-gradient';
 import type {RootScreenProps} from '../../navigation/types';
 import type {Universe} from '../../data/types';
 import {useApp} from '../../context/AppContext';
-import {usePlayer} from '../../context/PlayerContext';
 import {comparisonMetrics, getMood, getUniverse} from '../../data/mockData';
 import ScreenContainer from '../../components/layout/ScreenContainer';
 import CosmicHeader from '../../components/layout/CosmicHeader';
@@ -125,8 +124,7 @@ export default function CompareUniverses({
   navigation,
   route,
 }: RootScreenProps<'CompareUniverses'>) {
-  const {universes} = useApp();
-  const {play} = usePlayer();
+  const {universes, selectUniverse} = useApp();
   const {width} = useWindowDimensions();
 
   const left = useMemo(() => {
@@ -141,6 +139,11 @@ export default function CompareUniverses({
 
   const cardWidth = (width - spacing.screen * 2 - spacing.md) / 2;
   const orbitSize = Math.min(cardWidth - 38, 100);
+
+  const openPlayer = (universe: Universe) => {
+    selectUniverse(universe.id);
+    navigation.navigate('MusicalUniverse', {universeId: universe.id});
+  };
 
   const intro = useRef(new Animated.Value(0)).current;
   const metricAnims = useRef(
@@ -238,7 +241,7 @@ export default function CompareUniverses({
                 size="sm"
                 variant="secondary"
                 icon="play"
-                onPress={() => play(left)}
+                onPress={() => openPlayer(left)}
                 style={styles.summaryPlay}
               />
             </View>
@@ -280,7 +283,7 @@ export default function CompareUniverses({
                 size="sm"
                 variant="secondary"
                 icon="play"
-                onPress={() => play(right)}
+                onPress={() => openPlayer(right)}
                 style={styles.summaryPlay}
               />
             </View>

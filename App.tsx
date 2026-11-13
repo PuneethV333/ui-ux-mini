@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StatusBar} from 'react-native';
-import {NavigationContainer, DarkTheme} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DarkTheme,
+  useNavigationContainerRef,
+} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useFonts} from 'expo-font';
 import RootNavigator from './src/navigation/RootNavigator';
 import {AppProvider} from './src/context/AppContext';
-import {PlayerProvider} from './src/context/PlayerContext';
+import {PlayerProvider, usePlayer} from './src/context/PlayerContext';
 import {colors} from './src/theme';
 
 const navigationTheme = {
@@ -20,6 +24,29 @@ const navigationTheme = {
     notification: colors.secondary,
   },
 };
+
+const AUDIO_ROUTES = new Set(['MusicalUniverse', 'FinalComposition']);
+
+function AppNavigator() {
+  const navigationRef = useNavigationContainerRef();
+  const {pause} = usePlayer();
+
+  const handleStateChange = useCallback(() => {
+    const route = navigationRef.getCurrentRoute()?.name;
+    if (route && !AUDIO_ROUTES.has(route)) {
+      pause();
+    }
+  }, [navigationRef, pause]);
+
+  return (
+    <NavigationContainer
+      ref={navigationRef}
+      theme={navigationTheme}
+      onStateChange={handleStateChange}>
+      <RootNavigator />
+    </NavigationContainer>
+  );
+}
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -40,9 +67,7 @@ export default function App() {
       <StatusBar barStyle="light-content" />
       <AppProvider>
         <PlayerProvider>
-          <NavigationContainer theme={navigationTheme}>
-            <RootNavigator />
-          </NavigationContainer>
+          <AppNavigator />
         </PlayerProvider>
       </AppProvider>
     </SafeAreaProvider>

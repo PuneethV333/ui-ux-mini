@@ -25,6 +25,7 @@ import GlowButton from '../../components/common/GlowButton';
 import Icon, {IconName} from '../../components/common/Icon';
 import IconButton from '../../components/common/IconButton';
 import {useApp} from '../../context/AppContext';
+import {usePlayer} from '../../context/PlayerContext';
 import {getMood} from '../../data/mockData';
 import type {RootScreenProps} from '../../navigation/types';
 import {colors, gradients, spacing} from '../../theme';
@@ -230,6 +231,7 @@ function StepBars({active}: {active: number}) {
 export default function DrawYourMood({navigation, route}: Props) {
   const {width} = useWindowDimensions();
   const {selectedMood, selectMood, draft, updateDraft} = useApp();
+  const {pause} = usePlayer();
   const mood = getMood(route.params?.moodId ?? draft.mood);
 
   const [tool, setTool] = useState<Tool>('brush');
@@ -264,6 +266,11 @@ export default function DrawYourMood({navigation, route}: Props) {
       useNativeDriver: true,
     }).start();
   }, [fade]);
+
+  // Drawing should always be a quiet, focused moment.
+  useEffect(() => {
+    pause();
+  }, [pause]);
 
   useEffect(() => {
     if (initialisedRef.current) {

@@ -9,6 +9,7 @@ import GlassCard from '../../components/common/GlassCard';
 import GlowButton from '../../components/common/GlowButton';
 import Icon from '../../components/common/Icon';
 import {useApp} from '../../context/AppContext';
+import {useExitPrompt} from '../../hooks/useExitPrompt';
 import {moods} from '../../data/mockData';
 import type {Mood} from '../../data/types';
 import type {RootStackParamList} from '../../navigation/types';
@@ -99,6 +100,7 @@ export default function MoodSelection() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {selectedMood, selectMood} = useApp();
+  useExitPrompt();
   const fade = useRef(new Animated.Value(0)).current;
   const cardAnims = useRef(moods.map(() => new Animated.Value(0))).current;
 

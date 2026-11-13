@@ -69,7 +69,10 @@ export default function Signup() {
       return;
     }
     signUp(name.trim(), email.trim());
-    navigation.navigate('MainTabs', {screen: 'HomeTab'});
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'MainTabs', params: {screen: 'HomeTab'}}],
+    });
   };
 
   return (

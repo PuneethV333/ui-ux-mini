@@ -7,6 +7,7 @@ import IconButton from '../../components/common/IconButton';
 import ScreenContainer from '../../components/layout/ScreenContainer';
 import {useApp} from '../../context/AppContext';
 import {profileMenu} from '../../data/mockData';
+import {useExitPrompt} from '../../hooks/useExitPrompt';
 import {colors, gradients} from '../../theme';
 import Avatar from './Avatar';
 import MenuRow from './MenuRow';
@@ -31,6 +32,7 @@ const MENU_TONES: Record<string, {accent: string; tint: string}> = {
 export default function Profile() {
   const navigation = useNavigation<any>();
   const {user, universes, signOut} = useApp();
+  useExitPrompt();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [settings, setSettings] = useState<ProfileSettings>(DEFAULT_SETTINGS);
@@ -79,7 +81,7 @@ export default function Profile() {
           style: 'destructive',
           onPress: () => {
             signOut();
-            const action = {index: 0, routes: [{name: 'Splash'}]};
+            const action = {index: 0, routes: [{name: 'Login'}]};
             const root = navigation.getParent();
             if (root) {
               root.reset(action);

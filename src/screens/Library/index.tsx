@@ -7,6 +7,7 @@ import Chip from '../../components/common/Chip';
 import IconButton from '../../components/common/IconButton';
 import {useApp} from '../../context/AppContext';
 import {usePlayer} from '../../context/PlayerContext';
+import {useExitPrompt} from '../../hooks/useExitPrompt';
 import {getMood, libraryFilters} from '../../data/mockData';
 import type {RootStackParamList} from '../../navigation/types';
 import {layout, spacing} from '../../theme';
@@ -29,6 +30,7 @@ export default function Library() {
   const {width} = useWindowDimensions();
   const {universes, selectUniverse, toggleFavorite} = useApp();
   const {play} = usePlayer();
+  useExitPrompt();
 
   const [search, setSearch] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');

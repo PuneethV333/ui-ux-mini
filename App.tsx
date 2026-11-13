@@ -1,10 +1,10 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, View} from 'react-native';
 import {NavigationContainer, DarkTheme} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useFonts} from 'expo-font';
 import RootNavigator from './src/navigation/RootNavigator';
-import {AppProvider} from './src/context/AppContext';
+import {AppProvider, useApp} from './src/context/AppContext';
 import {PlayerProvider} from './src/context/PlayerContext';
 import {colors} from './src/theme';
 
@@ -20,6 +20,22 @@ const navigationTheme = {
     notification: colors.secondary,
   },
 };
+
+function AppContent() {
+  const {isReady} = useApp();
+
+  if (!isReady) {
+    return <View style={{flex: 1, backgroundColor: colors.background}} />;
+  }
+
+  return (
+    <PlayerProvider>
+      <NavigationContainer theme={navigationTheme}>
+        <RootNavigator />
+      </NavigationContainer>
+    </PlayerProvider>
+  );
+}
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -39,11 +55,7 @@ export default function App() {
     <SafeAreaProvider>
       <StatusBar barStyle="light-content" />
       <AppProvider>
-        <PlayerProvider>
-          <NavigationContainer theme={navigationTheme}>
-            <RootNavigator />
-          </NavigationContainer>
-        </PlayerProvider>
+        <AppContent />
       </AppProvider>
     </SafeAreaProvider>
   );

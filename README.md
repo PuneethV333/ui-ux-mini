@@ -154,6 +154,16 @@ There is no API client, no `fetch`, no WebSocket and no remote asset loading.
 Artwork and music are generated locally; fonts, audio and the app icon are
 bundled into the app.
 
+## Saved state and back behavior
+
+- Authentication and the universe library are persisted locally with
+  AsyncStorage, so a signed-in user returns straight to Home after reopening
+  the app.
+- Login and signup reset the navigation stack, so Android back can never walk
+  back into the auth screens.
+- On an authenticated tab root, Android back asks whether to **log out** or
+  **exit** the app. Stack screens keep normal back navigation.
+
 ## Assignment notes
 
 - Design tokens are centralised in `src/theme/`; screens consume tokens rather

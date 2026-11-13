@@ -13,6 +13,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export default function MainTabs() {
   return (
     <Tab.Navigator
+      backBehavior="none"
       // React Navigation calls tabBar as a render function, not as a component.
       // eslint-disable-next-line react/no-unstable-nested-components
       tabBar={props => <BottomTabBar {...props} />}

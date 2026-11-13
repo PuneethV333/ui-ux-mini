@@ -14,6 +14,7 @@ import SectionHeader from '../../components/common/SectionHeader';
 import ScreenContainer from '../../components/layout/ScreenContainer';
 import {useApp} from '../../context/AppContext';
 import {usePlayer} from '../../context/PlayerContext';
+import {useExitPrompt} from '../../hooks/useExitPrompt';
 import {discoverItems} from '../../data/mockData';
 import type {DiscoverItem, Universe} from '../../data/types';
 import {colors, gradients, spacing} from '../../theme';
@@ -63,6 +64,7 @@ export default function Home() {
   const {width} = useWindowDimensions();
   const {user, universes, selectUniverse} = useApp();
   const {play, toggle, isCurrent, isPlaying} = usePlayer();
+  useExitPrompt();
   const [hasUnread, setHasUnread] = useState(true);
 
   const greeting = useMemo(() => greetingForHour(new Date().getHours()), []);

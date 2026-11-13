@@ -51,13 +51,19 @@ export default function Login() {
       return;
     }
     signIn(email.trim());
-    navigation.navigate('MainTabs', {screen: 'HomeTab'});
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'MainTabs', params: {screen: 'HomeTab'}}],
+    });
   };
 
   const handleGoogle = () => {
     setErrors({});
     signIn('demo@sonicverse.app', 'Demo Explorer');
-    navigation.navigate('MainTabs', {screen: 'HomeTab'});
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'MainTabs', params: {screen: 'HomeTab'}}],
+    });
   };
 
   return (

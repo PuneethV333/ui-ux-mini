@@ -15,14 +15,17 @@ import SonicverseMap from '../screens/SonicverseMap';
 import CompareUniverses from '../screens/CompareUniverses';
 import RemixMerge from '../screens/RemixMerge';
 import FinalComposition from '../screens/FinalComposition';
+import {useApp} from '../context/AppContext';
 import type {RootStackParamList} from './types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootNavigator() {
+  const {isAuthenticated} = useApp();
+
   return (
     <Stack.Navigator
-      initialRouteName="Splash"
+      initialRouteName={isAuthenticated ? 'MainTabs' : 'Splash'}
       screenOptions={{
         headerShown: false,
         animation: 'slide_from_right',

@@ -2,9 +2,11 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   currentUser as seedUser,
   universes as seedUniverses,
@@ -23,6 +25,7 @@ export type DraftUniverse = {
 type AppContextValue = {
   user: User;
   isAuthenticated: boolean;
+  isReady: boolean;
   universes: Universe[];
   selectedMood: MoodId;
   draft: DraftUniverse;
@@ -48,6 +51,9 @@ type AppContextValue = {
 
 const AppContext = createContext<AppContextValue | null>(null);
 
+const AUTH_KEY = '@sonicverse/auth';
+const UNIVERSES_KEY = '@sonicverse/universes';
+
 const initialDraft: DraftUniverse = {
   mood: 'dreamy',
   intensity: 0.62,
@@ -59,6 +65,7 @@ const initialDraft: DraftUniverse = {
 export function AppProvider({children}: {children: React.ReactNode}) {
   const [user, setUser] = useState<User>(seedUser);
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const [isReady, setReady] = useState(false);
   const [universes, setUniverses] = useState<Universe[]>(seedUniverses);
   const [selectedMood, setSelectedMood] = useState<MoodId>('dreamy');
   const [draft, setDraft] = useState<DraftUniverse>(initialDraft);
@@ -69,26 +76,104 @@ export function AppProvider({children}: {children: React.ReactNode}) {
     Record<string, 'original' | 'parallel'>
   >({melody: 'original', beat: 'parallel', bass: 'original', atmosphere: 'parallel'});
 
-  const signIn = useCallback((email: string, name?: string) => {
-    setUser(prev => ({
-      ...prev,
-      email: email || prev.email,
-      name: name?.trim() || prev.name,
-    }));
-    setAuthenticated(true);
+  const persistAuth = useCallback((nextUser: User) => {
+    AsyncStorage.setItem(
+      AUTH_KEY,
+      JSON.stringify({user: nextUser, isAuthenticated: true}),
+    ).catch(() => {
+      // Persistence is best-effort; the session still works in memory.
+    });
   }, []);
 
-  const signUp = useCallback((name: string, email: string) => {
-    setUser(prev => ({
-      ...prev,
-      name: name.trim() || prev.name,
-      email: email || prev.email,
-      handle: `@${(name.trim() || 'SonicExplorer').replace(/\s+/g, '')}`,
-    }));
-    setAuthenticated(true);
+  useEffect(() => {
+    let mounted = true;
+    Promise.all([
+      AsyncStorage.getItem(AUTH_KEY),
+      AsyncStorage.getItem(UNIVERSES_KEY),
+    ])
+      .then(([authRaw, universesRaw]) => {
+        if (!mounted) {
+          return;
+        }
+        if (authRaw) {
+          const saved = JSON.parse(authRaw) as {
+            user?: User;
+            isAuthenticated?: boolean;
+          };
+          if (saved.user) {
+            setUser(saved.user);
+          }
+          if (saved.isAuthenticated) {
+            setAuthenticated(true);
+          }
+        }
+        if (universesRaw) {
+          const savedUniverses = JSON.parse(universesRaw) as Universe[];
+          if (Array.isArray(savedUniverses) && savedUniverses.length > 0) {
+            setUniverses(savedUniverses);
+            setSelectedUniverseId(savedUniverses[0].id);
+          }
+        }
+      })
+      .catch(() => {
+        // Corrupted saved state falls back to the seed data.
+      })
+      .finally(() => {
+        if (mounted) {
+          setReady(true);
+        }
+      });
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  const signOut = useCallback(() => setAuthenticated(false), []);
+  useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+    AsyncStorage.setItem(UNIVERSES_KEY, JSON.stringify(universes)).catch(() => {
+      // Best-effort persistence; the session still works in memory.
+    });
+  }, [isReady, universes]);
+
+  const signIn = useCallback(
+    (email: string, name?: string) => {
+      setUser(prev => {
+        const next = {
+          ...prev,
+          email: email || prev.email,
+          name: name?.trim() || prev.name,
+        };
+        persistAuth(next);
+        return next;
+      });
+      setAuthenticated(true);
+    },
+    [persistAuth],
+  );
+
+  const signUp = useCallback(
+    (name: string, email: string) => {
+      setUser(prev => {
+        const next = {
+          ...prev,
+          name: name.trim() || prev.name,
+          email: email || prev.email,
+          handle: `@${(name.trim() || 'SonicExplorer').replace(/\s+/g, '')}`,
+        };
+        persistAuth(next);
+        return next;
+      });
+      setAuthenticated(true);
+    },
+    [persistAuth],
+  );
+
+  const signOut = useCallback(() => {
+    setAuthenticated(false);
+    AsyncStorage.removeItem(AUTH_KEY).catch(() => {});
+  }, []);
 
   const selectMood = useCallback((mood: MoodId) => {
     setSelectedMood(mood);
@@ -173,6 +258,7 @@ export function AppProvider({children}: {children: React.ReactNode}) {
     () => ({
       user,
       isAuthenticated,
+      isReady,
       universes,
       selectedMood,
       draft,
@@ -192,6 +278,7 @@ export function AppProvider({children}: {children: React.ReactNode}) {
     [
       user,
       isAuthenticated,
+      isReady,
       universes,
       selectedMood,
       draft,

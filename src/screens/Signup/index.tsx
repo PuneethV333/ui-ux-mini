@@ -112,7 +112,7 @@ export default function Signup() {
         <View style={styles.glowViolet} pointerEvents="none" />
 
         <View style={styles.brandBlock}>
-          <Logo size={60} showWordmark />
+          <Logo size={124} />
           <Text style={styles.eyebrow}>JOIN THE SONICVERSE</Text>
           <Text style={styles.title}>Create your account</Text>
           <Text style={styles.subtitle}>

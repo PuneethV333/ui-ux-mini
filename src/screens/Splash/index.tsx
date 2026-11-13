@@ -16,7 +16,7 @@ import Svg, {
 } from 'react-native-svg';
 import ScreenContainer from '../../components/layout/ScreenContainer';
 import GlowButton from '../../components/common/GlowButton';
-import {SonicverseMark} from '../../components/common/Logo';
+import Logo from '../../components/common/Logo';
 import type {RootStackParamList} from '../../navigation/types';
 import {colors} from '../../theme';
 import {styles} from './styles';
@@ -26,7 +26,7 @@ export default function Splash() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {width, height} = useWindowDimensions();
 
-  const markSize = Math.round(Math.min(width * 0.42, height * 0.24, 168));
+  const markSize = Math.round(Math.min(width * 0.68, height * 0.32, 300));
 
   const pulse = useRef(new Animated.Value(0)).current;
   const enter = useRef(new Animated.Value(0)).current;
@@ -182,34 +182,8 @@ export default function Splash() {
               />
             </Svg>
           </Animated.View>
-          <View
-            style={[
-              styles.ring,
-              {
-                width: markSize * 1.16,
-                height: markSize * 1.16,
-                borderRadius: markSize * 0.58,
-                top: (markSize - markSize * 1.16) / 2,
-                left: (markSize - markSize * 1.16) / 2,
-              },
-            ]}
-          />
-          <SonicverseMark size={markSize} />
+          <Logo size={markSize} />
         </View>
-
-        <Text style={styles.wordmark} numberOfLines={1} adjustsFontSizeToFit>
-          Sonic<Text style={styles.wordmarkAccent}>Verse</Text>
-        </Text>
-
-        <View style={styles.divider}>
-          <View style={styles.dividerLine} />
-          <View style={styles.dividerDot} />
-          <View style={styles.dividerLine} />
-        </View>
-
-        <Text style={styles.tagline}>
-          Draw your mood.{'\n'}Create your sound.{'\n'}Explore the universe.
-        </Text>
       </Animated.View>
 
       <Animated.View

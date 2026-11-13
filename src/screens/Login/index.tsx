@@ -76,7 +76,7 @@ export default function Login() {
         <View style={styles.glowViolet} pointerEvents="none" />
 
         <View style={styles.brandBlock}>
-          <Logo size={64} showWordmark />
+          <Logo size={128} />
           <Text style={styles.eyebrow}>ACCESS YOUR UNIVERSE</Text>
           <Text style={styles.title}>Welcome back</Text>
           <Text style={styles.subtitle}>

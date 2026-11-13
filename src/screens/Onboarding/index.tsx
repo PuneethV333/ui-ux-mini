@@ -108,7 +108,7 @@ export default function Onboarding() {
       contentContainerStyle={styles.root}>
       <View style={styles.header}>
         <View style={styles.brand}>
-          <SonicverseMark size={28} showStars={false} />
+          <SonicverseMark size={28} />
           <Text style={styles.brandText}>SONICVERSE</Text>
         </View>
         <Pressable

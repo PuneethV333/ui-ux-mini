@@ -61,8 +61,8 @@ function universeFromDiscover(item: DiscoverItem): Universe {
 export default function Home() {
   const navigation = useNavigation<any>();
   const {width} = useWindowDimensions();
-  const {user, universes, selectUniverse, upsertUniverse} = useApp();
-  const {play, isCurrent, isPlaying} = usePlayer();
+  const {user, universes, selectUniverse} = useApp();
+  const {play, toggle, isCurrent, isPlaying} = usePlayer();
   const [hasUnread, setHasUnread] = useState(true);
 
   const greeting = useMemo(() => greetingForHour(new Date().getHours()), []);
@@ -72,20 +72,17 @@ export default function Home() {
     (_, index) => index * (cardWidth + spacing.md),
   );
 
-  const openUniverse = (universe: Universe, autoplay = false) => {
+  const openUniverse = (universe: Universe) => {
     selectUniverse(universe.id);
-    if (autoplay) {
-      play(universe);
-    }
     navigation.navigate('MusicalUniverse', {universeId: universe.id});
   };
 
   const openDiscoverItem = (item: DiscoverItem) => {
-    const universe = universeFromDiscover(item);
-    upsertUniverse(universe);
-    selectUniverse(universe.id);
-    play(universe);
-    navigation.navigate('MusicalUniverse', {universeId: universe.id});
+    if (isCurrent(item.id) && isPlaying) {
+      toggle();
+      return;
+    }
+    play(universeFromDiscover(item));
   };
 
   return (
@@ -190,7 +187,7 @@ export default function Home() {
                 width={cardWidth}
                 active={isPlaying && isCurrent(universe.id)}
                 onPress={() => openUniverse(universe)}
-                onPlay={() => openUniverse(universe, true)}
+                onPlay={() => play(universe)}
               />
             ))}
           </ScrollView>

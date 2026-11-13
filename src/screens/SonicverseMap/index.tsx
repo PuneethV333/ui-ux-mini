@@ -20,6 +20,7 @@ import Svg, {
 } from 'react-native-svg';
 import type {RootScreenProps} from '../../navigation/types';
 import {useApp} from '../../context/AppContext';
+import {usePlayer} from '../../context/PlayerContext';
 import {getUniverse, mapNodes} from '../../data/mockData';
 import type {MapNode} from '../../data/types';
 import ScreenContainer from '../../components/layout/ScreenContainer';
@@ -57,6 +58,7 @@ const sentenceCase = (value: string) =>
 
 export default function SonicverseMap({navigation}: RootScreenProps<'SonicverseMap'>) {
   const {universes, selectUniverse} = useApp();
+  const {play} = usePlayer();
   const {width} = useWindowDimensions();
 
   const [selectedId, setSelectedId] = useState('node-ii');
@@ -419,12 +421,7 @@ export default function SonicverseMap({navigation}: RootScreenProps<'SonicverseM
                       uppercase
                       size="sm"
                       variant="secondary"
-                      onPress={() => {
-                        selectUniverse(selectedUniverse.id);
-                        navigation.navigate('MusicalUniverse', {
-                          universeId: selectedUniverse.id,
-                        });
-                      }}
+                      onPress={() => play(selectedUniverse)}
                       style={styles.summaryButton}
                     />
                     <GlowButton

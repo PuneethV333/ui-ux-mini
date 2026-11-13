@@ -152,10 +152,7 @@ export default function Library() {
               universe={universe}
               width={cardWidth}
               onPress={() => openUniverse(universe.id)}
-              onPlay={() => {
-                play(universe);
-                openUniverse(universe.id);
-              }}
+              onPlay={() => play(universe)}
               onToggleFavorite={() => toggleFavorite(universe.id)}
             />
           ))}

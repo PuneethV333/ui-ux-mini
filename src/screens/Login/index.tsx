@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
-  Platform,
   Pressable,
   Text,
   View,
@@ -69,7 +68,7 @@ export default function Login() {
   return (
     <KeyboardAvoidingView
       style={styles.flex}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      behavior="padding">
       <ScreenContainer
         edges={['top', 'left', 'right', 'bottom']}
         contentContainerStyle={styles.content}>

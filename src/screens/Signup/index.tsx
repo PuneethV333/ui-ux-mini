@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
+  Keyboard,
   KeyboardAvoidingView,
-  Platform,
   Pressable,
+  ScrollView,
   Text,
   View,
 } from 'react-native';
@@ -35,6 +36,30 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState<Errors>({});
+  const [focusedField, setFocusedField] = useState<
+    'password' | 'confirmPassword' | null
+  >(null);
+  const scrollRef = useRef<React.ComponentRef<typeof ScrollView> | null>(
+    null,
+  );
+
+  const revealFields = () => {
+    requestAnimationFrame(() =>
+      scrollRef.current?.scrollToEnd({animated: true}),
+    );
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({animated: true});
+    }, 220);
+  };
+
+  useEffect(() => {
+    const subscription = Keyboard.addListener('keyboardDidShow', () => {
+      if (focusedField) {
+        revealFields();
+      }
+    });
+    return () => subscription.remove();
+  }, [focusedField]);
 
   const clearError = (field: keyof Errors) => {
     setErrors(prev => (prev[field] ? {...prev, [field]: undefined} : prev));
@@ -78,8 +103,9 @@ export default function Signup() {
   return (
     <KeyboardAvoidingView
       style={styles.flex}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      behavior="padding">
       <ScreenContainer
+        scrollRef={scrollRef}
         edges={['top', 'left', 'right', 'bottom']}
         contentContainerStyle={styles.content}>
         <View style={styles.glowPink} pointerEvents="none" />
@@ -148,6 +174,11 @@ export default function Signup() {
               autoComplete="new-password"
               textContentType="newPassword"
               returnKeyType="next"
+              onFocus={() => {
+                setFocusedField('password');
+                revealFields();
+              }}
+              onBlur={() => setFocusedField(null)}
               error={errors.password}
               accessibilityLabel="Password"
             />
@@ -167,6 +198,11 @@ export default function Signup() {
               autoComplete="new-password"
               textContentType="newPassword"
               returnKeyType="go"
+              onFocus={() => {
+                setFocusedField('confirmPassword');
+                revealFields();
+              }}
+              onBlur={() => setFocusedField(null)}
               onSubmitEditing={handleSignup}
               error={errors.confirmPassword}
               accessibilityLabel="Confirm password"

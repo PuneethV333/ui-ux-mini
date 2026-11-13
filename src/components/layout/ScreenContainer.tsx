@@ -20,6 +20,7 @@ type Props = {
   edges?: Array<'top' | 'bottom' | 'left' | 'right'>;
   variant?: 'default' | 'soft' | 'deep';
   showNebula?: boolean;
+  scrollRef?: React.RefObject<React.ComponentRef<typeof ScrollView> | null>;
 };
 
 export default function ScreenContainer({
@@ -32,6 +33,7 @@ export default function ScreenContainer({
   edges = ['top', 'left', 'right'],
   variant = 'default',
   showNebula = true,
+  scrollRef,
 }: Props) {
   const paddingBottom = withTabBar ? spacing.xxl : spacing.xxxl;
   return (
@@ -39,9 +41,11 @@ export default function ScreenContainer({
       <SafeAreaView style={[styles.safe, style]} edges={edges}>
         {scroll ? (
           <ScrollView
+            ref={scrollRef}
             showsVerticalScrollIndicator={false}
             bounces={false}
             keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
             contentContainerStyle={[
               styles.scrollContent,
               padded && styles.padded,
